@@ -119,6 +119,7 @@ public class AFD {
 
 		// ENTRA COM ESTADO INICIAL
 		String estadoIni = "{A}";
+		String estIniImprime = estadoIni;
 		int estadoi = 0;
 
 		estadoIni = removeNulos(estadoIni);
@@ -135,8 +136,8 @@ public class AFD {
 
 		// -------------------------------------------------
 		// ENTRA COM ESTADOS FINAIS
-		String conjuntoEstadosTerminais = "{C,D,E}";
-
+		String conjuntoEstadosTerminais = "{E}";
+		String conjEstTermImprime = conjuntoEstadosTerminais;
 		conjuntoEstadosTerminais = removeNulos(conjuntoEstadosTerminais);
 
 		int[] estadosf = new int[conjuntoEstadosTerminais.length()];
@@ -158,7 +159,7 @@ public class AFD {
 
 		// -------------------------------------------------
 		imprimirAutomato(alfabetoImprime, conjuntoDeEstadosTerminaisImprime, estadoPartida, estadoDestino, le,
-				estadoIni, conjuntoEstadosTerminais);
+				 estIniImprime, conjEstTermImprime);
 		// -------------------------------------------------
 
 		// INSERE E VERIFICA PALAVRA
@@ -251,7 +252,7 @@ public class AFD {
 		;
 		int b = 0;
 		for (int key : estadoPartida) {
-			estP[b] = conjuntoDeEstadosMap.get(key - 1);
+			estP[b] = conjuntoDeEstadosMap.get(key);
 			b++;
 		}
 
@@ -259,7 +260,7 @@ public class AFD {
 		;
 		int c = 0;
 		for (int key : estadoDestino) {
-			estD[c] = conjuntoDeEstadosMap.get(key - 1);
+			estD[c] = conjuntoDeEstadosMap.get(key);
 			c++;
 		}
 
