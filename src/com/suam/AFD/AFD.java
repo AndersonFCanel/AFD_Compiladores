@@ -16,6 +16,7 @@ public class AFD {
 
 		// ENTRADA DO CONJUNTO DE SIMBOLOS (ALFABETO)
 		String alfabeto = "{a,b}";// Enrando com conjundo de caracteres(alfabeto)
+		String conjuntodeSimbolos_AlfabetoImprime = alfabeto;
 
 		for (String n : nulos) {
 			alfabeto = alfabeto.replace(n, "");
@@ -33,6 +34,7 @@ public class AFD {
 
 		// ENTRADA DO CONJUNTO DE ESTADOS
 		String conjuntoDeEstadosTerminaisEnaoTerminais = "{A,B,C,D,E}";
+		String conjuntoDeEstadosTerminaisEnaoTerminaisImprime = conjuntoDeEstadosTerminaisEnaoTerminais;
 
 		// removendo carateres de formatação do conjunto
 		for (String n : nulos) {
@@ -51,44 +53,27 @@ public class AFD {
 		}
 
 		// ENTRADA FUNCAO DE TRANSICAO
-		String[] funcDeltaAux = new String[conjuntodeSimbolos_Alfabeto.length
-				* conjuntoDeEstadosTerminaisEnaoTerminais.length()];
-
-		String[] funcao = new String[conjuntodeSimbolos_Alfabeto.length
-				* conjuntoDeEstadosTerminaisEnaoTerminais.length()];
-		funcao[0] = "A1,a;B2";
-		funcao[1] = "A1,b;C3";
-		funcao[2] = "B2,a;B2";
-		funcao[3] = "B2,b;D4";
-		funcao[4] = "C3,a;B2";
-		funcao[5] = "C3,b;C3";
-		funcao[6] = "D4,a;B2";
-		funcao[7] = "D4,b;E5";
-		funcao[8] = "E5,a;B2";
-		funcao[9] = "E5,a;C3";
-
-		int c = 0, cont1 = 0;
-
-		for (c = 0; c < (conjuntodeSimbolos_Alfabeto.length * conjuntoDeEstadosTerminaisEnaoTerminais.length()); c++) {
-			funcDeltaAux[c] = funcao[c];
-			cont1++;
-		}
 
 		String[] funcDelta = new String[conjuntodeSimbolos_Alfabeto.length
 				* conjuntoDeEstadosTerminaisEnaoTerminais.length()];
-		for (c = 0; c < cont1; c++) {
-			funcDelta[c] = funcDeltaAux[c];
-		}
-
-		// -->>
+		funcDelta[0] = "A1,a;B2";
+		funcDelta[1] = "A1,b;C3";
+		funcDelta[2] = "B2,a;B2";
+		funcDelta[3] = "B2,b;D4";
+		funcDelta[4] = "C3,a;B2";
+		funcDelta[5] = "C3,b;C3";
+		funcDelta[6] = "D4,a;B2";
+		funcDelta[7] = "D4,b;E5";
+		funcDelta[8] = "E5,a;B2";
+		funcDelta[9] = "E5,a;C3";
 
 		String[] estadoPartidaS = new String[funcDelta.length];
 		String[] caracConsumidoS = new String[funcDelta.length];
 		String[] estadoDestinoS = new String[funcDelta.length];
 
-		int[] estadoPartida = new int[cont1];
-		int[] estadoDestino = new int[cont1];
-		char[] le = new char[cont1];
+		int[] estadoPartida = new int[funcDelta.length];
+		int[] estadoDestino = new int[funcDelta.length];
+		char[] le = new char[funcDelta.length];
 
 		// -->>
 
@@ -106,7 +91,7 @@ public class AFD {
 		int i = 0;
 		int regra = 0;
 
-		for (int p = 0; p < cont1; p++) {
+		for (int p = 0; p < funcDelta.length; p++) {
 
 			String aux = estadoPartidaS[i];
 			estadoPartida[i] = Integer.parseInt(String.valueOf(aux.charAt(1)));
@@ -167,8 +152,8 @@ public class AFD {
 		int tamanhoConjuntoEstadosTerminais = b;
 
 		// -------------------------------------------------
-		imprimirAutomato(conjuntodeSimbolos_Alfabeto, conjuntoDeEstadosTerminaisEnaoTerminais, estadoPartida,
-				estadoDestino, le, estadoIni, conjuntoEstadosTerminais);
+		imprimirAutomato(conjuntodeSimbolos_AlfabetoImprime, conjuntoDeEstadosTerminaisEnaoTerminaisImprime,
+				estadoPartida, estadoDestino, le, estadoIni, conjuntoEstadosTerminais);
 		// -------------------------------------------------
 
 		// ------------------INSERE E VERIFICA PALAVRA
@@ -177,15 +162,15 @@ public class AFD {
 		// PALAVRAS
 		do {
 			int teste = 0;
-			int teste1 = 0; // #CRIADO
+			
 			palavraS = JOptionPane.showInputDialog(null,
 					"Entre com a palavra a ser verificada: \nPara conferir suas entradas digite anteriores digite 'I'\nPara sair digite s");
 			if (palavraS.equalsIgnoreCase("s")) {
 				break;
 			}
 			if (palavraS.equalsIgnoreCase("I")) {
-				imprimirAutomato(conjuntodeSimbolos_Alfabeto, conjuntoDeEstadosTerminaisEnaoTerminais, estadoPartida,
-						estadoDestino, le, estadoIni, conjuntoEstadosTerminais);
+				imprimirAutomato(conjuntodeSimbolos_AlfabetoImprime, conjuntoDeEstadosTerminaisEnaoTerminaisImprime,
+						estadoPartida, estadoDestino, le, estadoIni, conjuntoEstadosTerminais);
 				palavraS = JOptionPane.showInputDialog(null,
 						"Entre com a palavra a ser verificada: \nPara conferir suas entradas digite anteriores digite 'I'\nPara sair digite s");
 				if (palavraS.equalsIgnoreCase("s")) {
@@ -195,21 +180,23 @@ public class AFD {
 
 			// -----VALIDAÃ‡ÃƒO DA PALAVRA
 			flagPal = VerificaPalavra(palavraS, conjuntodeSimbolos_Alfabeto);
+			System.out.println("PALAVRA: "+palavraS);
+			System.out.println("ARRAY DE CHAR insere: " + Arrays.toString(conjuntodeSimbolos_Alfabeto));
+			
 			if (!flagPal) {
 				System.out.println("INVALIDA PALAVRA");
 			} else {
 
 				char[] palavra = palavraS.toCharArray();
-				int palavralen = palavra.length;
 				int estadoa = estadoi;
 				int aux = 0;
 
-				for (int p = 0; p < palavralen; p++) {
+				for (int p = 0; p < palavra.length; p++) {
 					int mudou = 0;
 					int j = 0;
-
-					for (int k = 0; k < cont1; k++) {
-
+					System.out.println("conjuntodeSimbolos_Alfabeto: "+conjuntodeSimbolos_Alfabeto[p]);
+					for (int k = 0; k < funcDelta.length; k++) {
+						
 						if ((palavra[p] == le[k]) && (estadoa == estadoPartida[k])) {
 							aux = estadoDestino[k];
 							mudou = 1;
@@ -223,10 +210,6 @@ public class AFD {
 					if (mudou == 1) {
 						estadoa = aux;
 					} else {
-						// JOptionPane.showMessageDialog(null,
-						// "Nao tem regra para esse simbolo, ele nÃ£o pertenbce
-						// ao alfabeto informado.");
-						teste1 = 1;// #ALTERADO
 						break;
 					}
 
@@ -255,8 +238,8 @@ public class AFD {
 	// ---- METODOS DE IMPRESSÃƒO DEINFORMAÃ‡OES -
 
 	// IMPRIME ENTRADAS
-	private static void imprimirAutomato(Character[] alf, String est, int[] estadoPartida, int[] estadoDestino,
-			char[] le, String estIn, String conjuntoEstadosFinais) {
+	private static void imprimirAutomato(String alf, String est, int[] estadoPartida, int[] estadoDestino, char[] le,
+			String estIn, String conjuntoEstadosFinais) {
 
 		String[] estP = new String[estadoPartida.length];
 		;
@@ -280,46 +263,20 @@ public class AFD {
 						+ "\tO conjunto dos estados terminais e não terminais: Q = {S1, S2...}\n"
 						+ "\tAs transicoes: (δ: Q × Σ → Q)\n" + "\tO  estado Inicial: q0\n"
 						+ "\tO conjunto dos estados terminais: F\n" + "\tM = (Q, Σ, (δ: Q × Σ → Q), q0, F)\n"
-						+ "\n\t\t ==>DADOS INFORMADOS <==\n" + "\tΣ   = " + Arrays.toString(alf) + "\n" + ""
-						+ "\tQ   = " + est + "\n" + "\tδ   = \n" + "ESTADO PARTIDA:         Q" + Arrays.toString(estP)
-						+ "\n" + "CARACTER CONSUMIDO: Σ" + Arrays.toString(le) + "\n" + "ESTADO DESTINO:          Q"
+						+ "\n\t\t ==>DADOS INFORMADOS <==\n" + "\tΣ   = " + alf + "\n" + "" + "\tQ   = " + est + "\n"
+						+ "\tδ   = \n" + "ESTADO PARTIDA:         Q" + Arrays.toString(estP) + "\n"
+						+ "CARACTER CONSUMIDO: Σ" + Arrays.toString(le) + "\n" + "ESTADO DESTINO:          Q"
 						+ Arrays.toString(estD) + "\n" + "" + "\tq0  = " + estIn + "\n" + "" + "\tF   = "
 						+ conjuntoEstadosFinais + "\n" + "" + "**************************************************");
 	}
 
 	// ---------------------------METODOS DE ENTRADAS DE DADOS
 
-	// ENTRA ESTADO INICIAL
-	private static int entraEstIN(String[] estArray) {
-		boolean validador = true;
-		ArrayList lista = new ArrayList(Arrays.asList(estArray));
-
-		String estadoInicial;
-
-		estadoInicial = "A1";
-
-		int estadoIn = Integer.parseInt(String.valueOf(estadoInicial.charAt(1)));
-		return estadoIn;
-	}
-
-	// ENTRAR PALAVRA
-	private static String entrarPalavra() {
-		String palavra = JOptionPane.showInputDialog(null, "entre com a palavra a ser verificada pelo afd:\n"
-				+ "caso queira sair, digite 's'\n" + "caso queira imprimir o automato digite 'i' \n" + " ");
-		return palavra;
-	}
-
-	// SPLIT PARA SEPARAR ENTRADAS QUE CONTEM VIRGULA
-	private static String[] splitVirgula(String valor) {
-		return valor.split(",");// Divide a String quando ocorrer ","
-	}
-
 	// VERIFICA SE PALAVRA PERTENCE AO ALFABETO
 	private static boolean VerificaPalavra(String palavra, Character[] alf) {
-
 		int cont = 0;
-		for1: for (int x = 0; x < palavra.length(); x++) {
-			String caracPalavra = "" + palavra.charAt(x);
+		for (int x = 0; x < palavra.length(); x++) {
+			Character caracPalavra =  palavra.charAt(x);
 			for (int y = 0; y < alf.length; y++) {
 				if (caracPalavra.equals(alf[y])) {
 					cont++;
@@ -332,7 +289,7 @@ public class AFD {
 			// AO ALFABETO!!!\n\n");
 			return true;
 		} else {
-			JOptionPane.showMessageDialog(null, "Contém simbolos não pertencentes ao conjunto de simbolos (alfabeto)!n",
+			JOptionPane.showMessageDialog(null, "A palavra "+palavra+" contém simbolos não pertencentes ao conjunto de simbolos (alfabeto)!n",
 					"WARNING", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
