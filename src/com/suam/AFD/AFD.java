@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+/*Este código é capaz de validar a aceitação de uma palavra por qualquer automado, 
+ * desde que sejam alteradas corretamentes as funções e os conjuntos
+ * */
 public class AFD {
 	static HashMap<Integer, String> conjuntoDeEstadosMap = new HashMap<Integer, String>();
 	static HashMap<Integer, String> conjuntoDeEstadosFinaisMap = new HashMap<Integer, String>();
