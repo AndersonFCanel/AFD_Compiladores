@@ -60,7 +60,7 @@ public class AFD {
 		funcDelta[6] = "D,a;B";
 		funcDelta[7] = "D,b;E";
 		funcDelta[8] = "E,a;B";
-		funcDelta[9] = "E,a;C";
+		funcDelta[9] = "E,b;C";
 
 		String[] estadoPartidaS = new String[funcDelta.length];
 		String[] caracConsumidoS = new String[funcDelta.length];
@@ -86,12 +86,12 @@ public class AFD {
 
 			int h = 0;
 			for (Character ch : conjuntoDeEstadosTerminaisEnaoTerminais.toCharArray()) {
-				System.out.println("H: " + h + "==> p =" + p);
+				// System.out.println("H: " + h + "==> p =" + p);
 				for (int j = 0; j < (conjuntodeSimbolos_Alfabeto.length
 						* conjuntoDeEstadosTerminaisEnaoTerminais.length()); j++) {
 
 					if (estadoPartidaS[j].equals(ch.toString())) {
-						System.out.println("J1: " + j);
+						// System.out.println("J1: " + j);
 						estadoPartida[j] = h;
 					}
 				}
@@ -99,7 +99,7 @@ public class AFD {
 						* conjuntoDeEstadosTerminaisEnaoTerminais.length()); j++) {
 
 					if (estadoDestinoS[j].equals(ch.toString())) {
-						System.out.println("J2: " + j);
+						// System.out.println("J2: " + j);
 						estadoDestino[j] = h;
 					}
 				}
@@ -111,9 +111,9 @@ public class AFD {
 		}
 
 		// ----APOS O TRATAMENTO----------
-		System.out.println("ESTADO PARTIDA:     " + Arrays.toString(estadoPartida));
+		System.out.println("ESTADO PARTIDA:     " + Arrays.toString(estadoPartidaS));
 		System.out.println("CARACTER CONSUMIDO: " + Arrays.toString(le));
-		System.out.println("ESTADO DESTINO:     " + Arrays.toString(estadoDestino));
+		System.out.println("ESTADO DESTINO:     " + Arrays.toString(estadoDestinoS));
 
 		// -------------------------------------------------
 
@@ -159,7 +159,7 @@ public class AFD {
 
 		// -------------------------------------------------
 		imprimirAutomato(alfabetoImprime, conjuntoDeEstadosTerminaisImprime, estadoPartida, estadoDestino, le,
-				 estIniImprime, conjEstTermImprime);
+				estIniImprime, conjEstTermImprime);
 		// -------------------------------------------------
 
 		// INSERE E VERIFICA PALAVRA
@@ -168,7 +168,7 @@ public class AFD {
 		// PALAVRAS
 		do {
 			int teste = 0;
-
+			int w = 0;
 			palavraS = JOptionPane.showInputDialog(null,
 					"Entre com a palavra a ser verificada: \nPara conferir suas entradas digite anteriores digite 'I'\nPara sair digite s");
 			if (palavraS.equalsIgnoreCase("s")) {
@@ -184,7 +184,7 @@ public class AFD {
 				}
 			}
 
-			// -----VALIDAÃ‡ÃƒO DA PALAVRA
+			// -----VALIDAÇÃO DA PALAVRA
 			flagPal = VerificaPalavra(palavraS, conjuntodeSimbolos_Alfabeto);
 
 			if (!flagPal) {
@@ -192,34 +192,30 @@ public class AFD {
 
 				char[] palavra = palavraS.toCharArray();
 				int estadoa = estadoi;
-				int aux = 0;
 
 				for (int p = 0; p < palavra.length; p++) {
-					int mudou = 0;
+					System.out.println("VALOR DA ITERAÇÃO:: " + p);
+
 					for (int k = 0; k < funcDelta.length; k++) {
-						// System.out.println("ENTROU:" + (k + 1));
-						if ((palavra[p] == le[k]) && (estadoa == estadoPartida[k])) {
-							aux = estadoDestino[k];
-							System.out.println("Estado de destino ==>" + aux);
-							mudou = 1;
+						/*
+						 * System.out.println("(palavra[p]: " + palavra[p]);
+						 * System.out.println("estadoPartida[k]: " + estadoPartida[k]);
+						 * System.out.println("estadoa :" + estadoa); System.out.println("le[k]: " +
+						 * le[k]); System.out.println("Estado de destino =aux==>" + estadoDestino[k]);
+						 * System.out.println("*************\n");
+						 */
+						if ((palavra[p] == le[k]) && (estadoPartida[k] == estadoa)) {
+							estadoa = estadoDestino[k];
+							
+							w++;
 							break;
 						} else {
-							mudou = 0;
 						}
-
-					}
-
-					if (mudou == 1) {
-						System.out.println("Estado anterior:  " + estadoa);
-						estadoa = aux;
-						System.out.println("NOVO Estado anterior:  " + estadoa);
-					} else {
-						break;
 					}
 
 					for (int k = 0; k < conjuntoEstadosTerminais.length(); k++) {
 						System.out.println("***********************COMPARANDO");
-						System.out.println("Estado anterio: " + estadoa);
+						System.out.println("Estado anterior: " + estadoa);
 						System.out.println("Estado final: " + estadosf[k]);
 						System.out.println("**********************************");
 						if (estadoa == estadosf[k]) {
@@ -229,8 +225,7 @@ public class AFD {
 						}
 					}
 				}
-				if (teste == 1) { // && teste1 !=1){//: #ALTERADO if teste ==
-									// 1){
+				if (teste == 1) {
 					JOptionPane.showMessageDialog(null, "PALAVRA ACEITA PELO AUTOMATO\n\n");
 					// break;
 				} else {
