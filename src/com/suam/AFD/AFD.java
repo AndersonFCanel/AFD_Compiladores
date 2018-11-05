@@ -7,17 +7,21 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-/*Este código é capaz de validar a aceitação de uma palavra por qualquer automado, 
- * desde que sejam alteradas corretamentes as funções e os conjuntos
+/* @Anderson Ferreira Canel
+ * Este código é capaz de verificar a aceitação de uma palavra por um dado automato,
+ * caso queira verificar a aceitação  de outras palavras por outros automatos altere a 
+ * regra de produção e os conjuntos de estados e simbolos hardcoded.
  * */
 public class AFD {
 	static HashMap<Integer, String> conjuntoDeEstadosMap = new HashMap<Integer, String>();
 	static HashMap<Integer, String> conjuntoDeEstadosFinaisMap = new HashMap<Integer, String>();
+	static String alfabetoImprime;
+	static String conjuntoDeEstadosTerminaisImprime;
 
 	public static void main(String[] args) {
 		// ENTRADA DO CONJUNTO DE SIMBOLOS (ALFABETO)
 		String alfabeto = "{a,b}";// Enrando com conjundo de caracteres(alfabeto)
-		String alfabetoImprime = alfabeto;
+		alfabetoImprime = alfabeto;
 
 		alfabeto = removeNulos(alfabeto);
 
@@ -33,7 +37,7 @@ public class AFD {
 
 		// ENTRADA DO CONJUNTO DE ESTADOS
 		String conjuntoDeEstadosTerminaisEnaoTerminais = "{A,B,C,D,E}";
-		String conjuntoDeEstadosTerminaisImprime = conjuntoDeEstadosTerminaisEnaoTerminais;
+		conjuntoDeEstadosTerminaisImprime = conjuntoDeEstadosTerminaisEnaoTerminais;
 
 		conjuntoDeEstadosTerminaisEnaoTerminais = removeNulos(conjuntoDeEstadosTerminaisEnaoTerminais);
 
@@ -206,7 +210,7 @@ public class AFD {
 						 */
 						if ((palavra[p] == le[k]) && (estadoPartida[k] == estadoa)) {
 							estadoa = estadoDestino[k];
-							
+
 							w++;
 							break;
 						} else {
@@ -229,7 +233,7 @@ public class AFD {
 					JOptionPane.showMessageDialog(null, "PALAVRA ACEITA PELO AUTOMATO\n\n");
 					// break;
 				} else {
-					JOptionPane.showMessageDialog(null, "PALAVRA NÃƒO ACEITA PELO AUTOMATO\n\n");
+					JOptionPane.showMessageDialog(null, "PALAVRA NÃO ACEITA PELO AUTOMATO\n\n");
 					// break;
 				}
 			}
@@ -290,7 +294,8 @@ public class AFD {
 			return true;
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"A palavra " + palavra + " contém simbolos não pertencentes ao conjunto de simbolos (alfabeto)!n",
+					"A palavra " + palavra + " contém simbolos não pertencentes ao conjunto de simbolos (alfabeto,Σ= "
+							+ alfabetoImprime + ")!",
 					"WARNING", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
