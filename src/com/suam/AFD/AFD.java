@@ -255,7 +255,7 @@ public class AFD {
 		}
 
 		JOptionPane.showMessageDialog(null,
-				"**************************************************\n" + "\tIMPRIMINDO ENTRADAS DO AUTOMATO\n"
+				"**************************************************\n" + "\tIMPRIMINDO DADOS DO AUTOMATO\n"
 						+ "\t\t\t ==>NOTAÇÃO UTILIZADA <== \n" + "\tO conjunto de simbolos - alfabeto: Σ \n"
 						+ "\tO conjunto dos estados terminais e não terminais: Q = {S1, S2...}\n"
 						+ "\tAs transicoes: (δ: Q × Σ → Q)\n" + "\tO  estado Inicial: q0\n"
