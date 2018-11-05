@@ -229,7 +229,7 @@ public class AFD {
 				}
 			}
 		} while (!palavraS.equalsIgnoreCase("s"));
-		JOptionPane.showMessageDialog(null, "Voce finalizou a aplicaÃ§ao, obrigado!");
+		JOptionPane.showMessageDialog(null, "Voce finalizou a aplição, obrigado!");
 	}
 
 	// ---------------METODOS------------
