@@ -165,7 +165,7 @@ public class AFD {
 			int teste = 0;
 			int w = 0;
 			palavraS = JOptionPane.showInputDialog(null,
-					"Entre com a palavra a ser verificada: \nPara conferir suas entradas digite anteriores digite 'I'\nPara sair digite s");
+					"Entre com a palavra a ser verificada: \nPara conferir os valores dos conjuntos e regras de produção digite 'i'\nPara sair digite s");
 			if (palavraS.equalsIgnoreCase("s")) {
 				break;
 			}
@@ -173,7 +173,7 @@ public class AFD {
 				imprimirAutomato(alfabetoImprime, conjuntoDeEstadosTerminaisImprime, estadoPartida, estadoDestino, le,
 						estadoIni, conjuntoEstadosTerminais);
 				palavraS = JOptionPane.showInputDialog(null,
-						"Entre com a palavra a ser verificada: \nPara conferir suas entradas digite anteriores digite 'I'\nPara sair digite s");
+						"Entre com a palavra a ser verificada: \nPara conferir os valores dos cinjuntos e regras de produção digite 'i'\nPara sair digite s");
 				if (palavraS.equalsIgnoreCase("s")) {
 					break;
 				}
@@ -283,7 +283,7 @@ public class AFD {
 			return true;
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"A palavra " + palavra + " contém simbolos não pertencentes ao conjunto de simbolos (alfabeto,Σ= "
+					"A palavra \"" + palavra + "\" contém simbolos não pertencentes ao conjunto de simbolos (alfabeto,Σ= "
 							+ alfabetoImprime + ")!",
 					"WARNING", JOptionPane.WARNING_MESSAGE);
 			return false;
