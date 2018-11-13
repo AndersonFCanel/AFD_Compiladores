@@ -20,10 +20,13 @@ public class AFD {
 	static String conjuntoDeEstadosTerminaisImprime;
 
 	public static void main(String[] args) {
-		// ENTRADA DO CONJUNTO DE SIMBOLOS (ALFABETO)
+		/**
+		 * Trecho responsável por receber o conjunto de simbolos(Alfabeto) e armazenar o
+		 * mesmo sem os caracteres desnecessários em um array de char.
+		 */
 		String alfabeto = "{a,b}";
 		alfabetoImprime = alfabeto;
-		alfabeto = removeNulos(alfabeto);
+		alfabeto = removeNulos(alfabeto);// Removendo {,}
 
 		List<Character> alf = new ArrayList<>();
 		Character[] conjuntodeSimbolos_Alfabeto = new Character[alfabeto.length()];
@@ -35,25 +38,33 @@ public class AFD {
 			System.out.println("Simbolo Alfabeto: " + ch);
 		}
 
-		// ENTRADA DO CONJUNTO DE ESTADOS TERMINAIS E NÃO TERMINAIS
+		/**
+		 * Trecho responsável por receber o conjunto de estados(Terminais e não
+		 * Terminais), e armazenar o mesmo sem os caracteres desnecessários em um array
+		 * de int, convertendo a posição de um estado formecido no conjunto em um valor
+		 * númerico, em ordem crescente correspondente a ordem dos estados fornecidos.
+		 */
 		String conjuntoDeEstadosTerminaisEnaoTerminais = "{A,B,C,D,E}";
 		conjuntoDeEstadosTerminaisImprime = conjuntoDeEstadosTerminaisEnaoTerminais;
-		conjuntoDeEstadosTerminaisEnaoTerminais = removeNulos(conjuntoDeEstadosTerminaisEnaoTerminais);
+		conjuntoDeEstadosTerminaisEnaoTerminais = removeNulos(conjuntoDeEstadosTerminaisEnaoTerminais);// Removendo {,}
 
 		int estados = conjuntoDeEstadosTerminaisEnaoTerminais.length();
 		int[] conjuntoDeEstados = new int[estados];
 		int a = 0;
 		for (Character ch : conjuntoDeEstadosTerminaisEnaoTerminais.toCharArray()) {
 			conjuntoDeEstadosMap.put(a, ch.toString());
-			//IMPRIMINDO CONJUNTO DE ESTADOS NO CONSOLE
-			System.out.print("Estado: " + ch+" - ");
+			// IMPRIMINDO CONJUNTO DE ESTADOS NO CONSOLE
+			System.out.print("Estado: " + ch + " - ");
 			conjuntoDeEstados[a] = a;
 			a++;
 
 		}
 
-		// ENTRADA FUNCAO DE TRANSICAO(REGRAS DE PRODUÇÃO)
-		// ESTADO (LADO ESQUERDO), CONSOME(CENTRO); VAI PARA ESTADO(LADO DIREITO)
+		/**
+		 * Trecho responsável por receber entrada do conjundo de regras de
+		 * transição(Regra de Produção), funciona da seguinte forma: 
+		 * # ESTADO (LADO ESQUERDO), CONSOME(CENTRO); VAI PARA ESTADO(LADO DIREITO)#
+		 */
 		String[] funcDelta = new String[conjuntodeSimbolos_Alfabeto.length
 				* conjuntoDeEstadosTerminaisEnaoTerminais.length()];
 		funcDelta[0] = "A,a;B";
@@ -111,12 +122,17 @@ public class AFD {
 			aux = caracConsumidoS[p];
 			le[p] = aux.charAt(0);
 		}
-		//IMPRIMINDO REGRA DE PRODUÇÃO NO CONSOLE
+		// IMPRIMINDO REGRA DE PRODUÇÃO NO CONSOLE
 		System.out.println("ESTADO PARTIDA:     " + Arrays.toString(estadoPartidaS));
 		System.out.println("CARACTER CONSUMIDO: " + Arrays.toString(le));
 		System.out.println("ESTADO DESTINO:     " + Arrays.toString(estadoDestinoS));
 
-		// ENTRA COM ESTADO INICIAL
+		/**
+		 * Trecho responsável por receber o estado inicial, identificar posição
+		 * correspondente no conjunto de estados(Terminais e não terminais) e armazena o mesmo sem os caracteres
+		 * desnecessários em uma variável do tipo int com o valor correspondente a sua posição no conjunto de
+		 * estados.
+		 */
 		String estadoIni = "{A}";
 		String estIniImprime = estadoIni;
 		int estadoi = 0;
@@ -133,7 +149,13 @@ public class AFD {
 			u++;
 		}
 
-		// ENTRA COM O CONJUNTO DE ESTADOS FINAIS
+		/**
+		 * Trecho responsável por receber o conjunto de estados finais (Terminais), e
+		 * armazenar o mesmo sem os caracteres desnecessários em um array de int,
+		 * indentificando a posição de um estado formecido no conjunto em um valor
+		 * númerico, corespondente a pocisão do mesmo no conjunto de estados (Terminais
+		 * e não Terminais)e armazenando estes valores em um array de tipo int.
+		 */
 		String conjuntoEstadosTerminais = "{E}";
 		String conjEstTermImprime = conjuntoEstadosTerminais;
 		conjuntoEstadosTerminais = removeNulos(conjuntoEstadosTerminais);
@@ -152,13 +174,16 @@ public class AFD {
 			}
 			y++;
 		}
-		//IMPRIMINDO CONJUNTO DOS ESTADOS TERMINAIS NO CONSOLE
+		// IMPRIMINDO CONJUNTO DOS ESTADOS TERMINAIS NO CONSOLE
 		System.out.println("ESTADOS FINAIS: " + Arrays.toString(estadosf));
 
 		imprimirAutomato(alfabetoImprime, conjuntoDeEstadosTerminaisImprime, estadoPartida, estadoDestino, le,
 				estIniImprime, conjEstTermImprime);
 
-		// INSERE E VERIFICA SE PALAVRA PERTENCE AO CONJUNTO DE SIMBOLOS-(ALFABETO)
+		/*
+		 * Entrada realizada pelo usuário, realiza vereificação para checkar se a
+		 * palavra pode ser formada com os caracteres do conjunto de simbolo (alfabeto).
+		 */
 		String palavraS;
 		boolean flagPal;
 		do {
@@ -179,7 +204,7 @@ public class AFD {
 				}
 			}
 
-			//VALIDACAO DA PALAVRA PELO AUTOMATO
+			//Variável reponsável por receber  a validação da palavra pelo automato
 			flagPal = VerificaPalavra(palavraS, conjuntodeSimbolos_Alfabeto);
 
 			if (!flagPal) {
@@ -232,9 +257,8 @@ public class AFD {
 		JOptionPane.showMessageDialog(null, "Voce finalizou a aplição, obrigado!");
 	}
 
-	// ---------------METODOS------------
-	
-	// IMPRIME CONJUNTOS E REGRAS DE PRODUÇÃO
+	// ---------------METODOS UTILIZADOS NO CÓDIGO------------
+	//IMPRIME CONJUNTOS E REGRAS DE PRODUÇÃO
 	private static void imprimirAutomato(String alf, String est, int[] estadoPartida, int[] estadoDestino, char[] le,
 			String estIn, String conjuntoEstadosFinais) {
 
@@ -267,7 +291,7 @@ public class AFD {
 						+ conjuntoEstadosFinais + "\n" + "" + "**************************************************");
 	}
 
-	// VERIFICA SE PALAVRA PERTENCE AO ALFABETO
+	//VERIFICA SE PALAVRA PERTENCE AO ALFABETO
 	private static boolean VerificaPalavra(String palavra, Character[] alf) {
 		int cont = 0;
 		for (int x = 0; x < palavra.length(); x++) {
@@ -283,14 +307,15 @@ public class AFD {
 			return true;
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"A palavra \"" + palavra + "\" contém simbolos não pertencentes ao conjunto de simbolos (alfabeto,Σ= "
+					"A palavra \"" + palavra
+							+ "\" contém simbolos não pertencentes ao conjunto de simbolos (alfabeto,Σ= "
 							+ alfabetoImprime + ")!",
 					"WARNING", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 	}
 
-	//REMOVE CARACTERES DE FORMATAÇÃO (NATAÇÃO) DO CONJUNTO
+	//REMOVE CARACTERES DE FORMATAÇÃO DO CONJUNTO, EX: {,}
 	public static String removeNulos(String conjunto) {
 		String[] nulos = { "{", "}", "," };// identificando carateres de formatação do conjunto
 		for (String n : nulos) {
